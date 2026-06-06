@@ -92,6 +92,20 @@ The workflow sets `NEXT_PUBLIC_BASE_PATH=/github-usage-based-billing` so assets 
 
 If you want to use this deck in your own customer conversations: fork it, swap the example numbers in [src/lib/models.ts](src/lib/models.ts) and [src/lib/sections.ts](src/lib/sections.ts), and you're set.
 
+## References
+
+Every number, behavior, and policy in this deck comes from the public GitHub documentation listed below — nothing here relies on private or partner-only material. If you want to verify a specific figure (rate per model, pool size, what triggers a block, who gets the email, etc.), start here:
+
+- [About billing for GitHub Copilot](https://docs.github.com/en/copilot/concepts/billing/billing-for-individual-usage)
+- [About Usage-Based Billing for Copilot](https://docs.github.com/en/copilot/how-tos/manage-your-account/about-usage-based-billing)
+- [Usage-Based Billing for organizations and enterprises](https://docs.github.com/en/copilot/how-tos/administer-your-organization/usage-based-billing-for-organizations-and-enterprises)
+- [Managing your Copilot subscription as an individual](https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-your-subscription)
+- [Budgets for Usage-Based Billing](https://docs.github.com/en/billing/managing-your-billing/preventing-overspending/budgets-for-usage-based-billing)
+- [AI credit rates for premium models](https://docs.github.com/en/copilot/reference/ai-models/model-comparison)
+- [Monitoring your Copilot usage](https://docs.github.com/en/copilot/how-tos/administer-your-organization/monitor-copilot-usage)
+- [Minimum IDE versions for the new billing experience](https://docs.github.com/en/copilot/reference/copilot-clients/supported-ides)
+- [Copilot plans comparison (Business / Enterprise)](https://docs.github.com/en/copilot/about-github-copilot/plans-for-github-copilot)
+
 ## Disclaimer
 
-The pricing, pool sizes, and behavior described here reflect publicly documented Copilot Usage-Based Billing as of mid-2026. Always cross-check with the [official docs](https://docs.github.com/en/copilot/concepts/billing/billing-for-individual-usage) for the latest numbers before quoting them to a customer.
+Pricing, pool sizes, model rates, and behavior described here reflect publicly documented Copilot Usage-Based Billing as of mid-2026 and are subject to change. This project is **not affiliated with, endorsed by, or maintained by GitHub or Microsoft** — always cross-check with the [official docs](https://docs.github.com/en/copilot/concepts/billing/billing-for-individual-usage) for the latest numbers before quoting them to a customer.
