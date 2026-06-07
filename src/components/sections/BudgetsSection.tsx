@@ -35,10 +35,10 @@ export function BudgetsSection({ part = "a" }: Props = {}) {
         mapping={[
           { from: "Door 1 — always locked",   to: "Universal user-level budget · always hard-stops" },
           { from: "Door 2 — always locked",   to: "Individual user-level budget · always hard-stops" },
-          { from: "Door 3 — toggle-driven",   to: "Cost-center budget · stops only when toggle is ON" },
+          { from: "Door 3 — toggle-driven",   to: "Cost-center budget · Copilot Enterprise only · stops only when toggle is ON" },
           { from: "Door 4 — toggle-driven",   to: "Enterprise spending limit · stops only when toggle is ON" },
         ]}
-        footnote="Click the toggle and watch doors 3 and 4 lock/unlock live."
+        footnote="Click the toggle and watch doors 3 and 4 lock/unlock live. On Copilot Business there is no cost-center — use per-user override instead."
       />
     </SectionShell>
   );
