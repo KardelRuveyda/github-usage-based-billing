@@ -18,15 +18,15 @@ export function AiCreditsSection({ part = "a" }: Props = {}) {
         <Analogy
           emoji="🚕"
           title="Taxi meter"
-          subtitle="Distance → fare → paid with prepaid receipts — three steps, in order"
+          subtitle="Distance → receipts → dollar value — ending where your CFO actually looks"
           visual={<TaxiMeterViz />}
           mapping={[
-            { from: "Distance you travel",                 to: "Token count (input + output)" },
-            { from: "The taxi’s rate (day / night tariff)",  to: "Model’s $/1M token rate" },
-            { from: "Raw fare ticking up on the meter",    to: "Intermediate USD amount" },
-            { from: "Prepaid receipts you bought earlier", to: "AI credit (1 receipt = $0.01)" },
+            { from: "Distance you travel",                  to: "Token count (input + output)" },
+            { from: "The taxi’s rate (day / night tariff)", to: "Model’s credit-per-1M-token rate" },
+            { from: "Prepaid receipts you hand over",       to: "AI credits drawn from the pool" },
+            { from: "Dollar value of those receipts",       to: "USD cost (1 credit = $0.01)" },
           ]}
-          footnote="Distance → dollars → receipts. Three steps. No hidden multiplier, no surprise formula in between."
+          footnote="Credits are the unit you spend. Dollars are the answer on the invoice. We end at the dollar — that's what the bill shows."
         />
       </SectionShell>
     );
@@ -36,8 +36,8 @@ export function AiCreditsSection({ part = "a" }: Props = {}) {
     <SectionShell id="ai-credits" eyebrow="03 · The formula" title={TITLE} compact>
       <div className="grid md:grid-cols-3 gap-3 mb-4">
         <Stage color="var(--blue)"   label="TOKENS"     value="consumed"   sub="input · output · cached" />
-        <Stage color="var(--yellow)" label="USD"        value="summed"     sub="model-specific token rates" />
-        <Stage color="var(--green)"  label="AI CREDITS" value="drawn down" sub="$0.01 per credit · fixed" />
+        <Stage color="var(--green)"  label="AI CREDITS" value="drawn down" sub="per-model credit rate · pooled" />
+        <Stage color="var(--yellow)" label="USD"        value="on invoice" sub="1 credit = $0.01 · fixed" />
       </div>
 
       <div className="formula-block">

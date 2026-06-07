@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 /**
  * Taxi meter analogy: three stages that loop.
  *  1. Taxi drives → distance grows  (tokens)
- *  2. Meter ticks dollars            (USD)
- *  3. Receipt punches credits        (AI credits)
+ *  2. Receipt punches credits       (AI credits drawn)
+ *  3. Receipts converted to dollars (USD — what the bill shows)
  */
 export function TaxiMeterViz() {
   return (
@@ -36,22 +36,22 @@ export function TaxiMeterViz() {
 
       <Arrow />
 
-      <Stage label="DOLLARS" sub="$ / 1M token rate">
+      <Stage label="CREDITS" sub="drawn from pool · per-model rate">
         <div className="flex items-center gap-3">
-          <div className="font-mono text-xs text-[var(--text-muted)]">meter:</div>
-          <div className="flex-1 text-center font-mono text-lg font-bold text-[var(--yellow)]">
-            $<Ticker from={0} to={0.024} duration={4} decimals={5} />
+          <div className="font-mono text-xs text-[var(--text-muted)]">receipt:</div>
+          <div className="flex-1 text-center font-mono text-lg font-bold text-[var(--green)]">
+            <Ticker from={0} to={2.4} duration={4} decimals={2} /> cr
           </div>
         </div>
       </Stage>
 
       <Arrow />
 
-      <Stage label="CREDITS" sub="× 100  (1 credit = $0.01)">
+      <Stage label="DOLLARS" sub="× $0.01  (1 credit = $0.01)">
         <div className="flex items-center gap-3">
-          <div className="font-mono text-xs text-[var(--text-muted)]">receipt:</div>
-          <div className="flex-1 text-center font-mono text-lg font-bold text-[var(--green)]">
-            <Ticker from={0} to={2.4} duration={4} decimals={2} /> cr
+          <div className="font-mono text-xs text-[var(--text-muted)]">invoice:</div>
+          <div className="flex-1 text-center font-mono text-lg font-bold text-[var(--yellow)]">
+            $<Ticker from={0} to={0.024} duration={4} decimals={5} />
           </div>
         </div>
       </Stage>
