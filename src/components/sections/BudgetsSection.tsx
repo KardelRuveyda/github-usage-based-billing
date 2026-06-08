@@ -33,12 +33,12 @@ export function BudgetsSection({ part = "a" }: Props = {}) {
         subtitle="2 doors are always locked; 2 doors lock only when the toggle is on"
         visual={<ApartmentDoorsViz />}
         mapping={[
-          { from: "Door 1 — always locked",   to: "Universal user-level budget · always hard-stops" },
-          { from: "Door 2 — always locked",   to: "Individual user-level budget · always hard-stops" },
-          { from: "Door 3 — toggle-driven",   to: "Cost-center budget · Copilot Enterprise only · stops only when toggle is ON" },
-          { from: "Door 4 — toggle-driven",   to: "Enterprise spending limit · stops only when toggle is ON" },
+          { from: "Door 1 — always locked",   to: "Universal user-level budget · checked FIRST, even before the pool" },
+          { from: "Door 2 — always locked",   to: "Individual user-level override · same gate, per-person cap" },
+          { from: "Door 3 — toggle-driven",   to: "Cost-center budget · Enterprise only · CC ≠ Org (CC is a billing group, Org is the org boundary)" },
+          { from: "Door 4 — toggle-driven",   to: "Enterprise spending limit · master cap · can exclude CC users via toggle" },
         ]}
-        footnote="Click the toggle and watch doors 3 and 4 lock/unlock live. On Copilot Business there is no cost-center — use per-user override instead."
+        footnote="ULB is the only door that runs in pool-phase too — so a user can be blocked while the pool still has free credits. On Copilot Business there is no cost-center; use per-user override. ‘Exclude CC usage from Ent’ lets CC teams keep going after the enterprise cap blocks everyone else."
       />
     </SectionShell>
   );

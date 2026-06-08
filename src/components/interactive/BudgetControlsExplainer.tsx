@@ -6,12 +6,15 @@ import { useState } from "react";
  * BudgetControlsExplainer — visualises the 4-layer budget check that GitHub
  * runs on every billable Copilot interaction (post-quota / overage phase):
  *
- *  1. User-level (universal + per-user)  — always a hard stop
+ *  1. User-level (universal + per-user)  — checked FIRST, in both pool and metered phases
  *  2. Shared pool                        — included credits across the entity
- *  3. Cost center / Enterprise           — metered phase only
+ *  3. Cost center / Org / Enterprise     — metered phase only; checked independently
  *  4. "Stop usage when limit reached"    — must be ON to enforce 3
  *
  * "Lowest remaining headroom wins" — if any layer is empty, the request stops.
+ * Note: CC ≠ Org. A user is either in a CC (billing group) or governed by Org
+ * (org boundary). Enterprise sits above both, with an "Exclude CC usage" toggle
+ * that lets CC teams keep running after the enterprise cap blocks everyone else.
  */
 
 type Layer = {
@@ -28,7 +31,7 @@ const LAYERS: Layer[] = [
     title: "User-level budget (ULB)",
     applies: "Pool AND metered phase",
     hardStop: true,
-    note: "Universal default for everyone, optionally overridden per user. Always blocks — no setting required.",
+    note: "Universal default for everyone, optionally overridden per user. Always blocks — no setting required. Runs FIRST: can block even when the pool still has free credits.",
   },
   {
     id: "pool",
@@ -39,17 +42,17 @@ const LAYERS: Layer[] = [
   },
   {
     id: "cost-center",
-    title: "Cost center budget",
+    title: "Cost center / Org budget",
     applies: "Metered phase only",
     hardStop: false,
-    note: "Optional grouping of users (e.g. by team). Excluded users fall back to the enterprise budget.",
+    note: "If the user is in a CC (billing group), the CC budget governs them. Otherwise the Org budget (org boundary) applies. Checked independently — CC ≠ Org.",
   },
   {
     id: "enterprise",
     title: "Enterprise budget",
     applies: "Metered phase only",
     hardStop: false,
-    note: "Master cap. Soft by default — flip 'Stop usage when budget limit is reached' to make it a hard stop.",
+    note: "Master cap. Soft by default — flip 'Stop usage when budget limit is reached' to make it a hard stop. Optional 'Exclude CC usage' toggle bypasses Ent for CC users.",
   },
 ];
 
@@ -175,6 +178,34 @@ export function BudgetControlsExplainer() {
             </div>
           );
         })}
+
+        {/* Surprising-scenario callout — drawn from the 20-path GBB pipeline tool */}
+        <div className="mt-2 p-5 rounded-2xl border border-[var(--line)] bg-[rgba(13,17,23,0.55)]">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="eyebrow">Four scenarios that surprise admins</span>
+          </div>
+          <ul className="space-y-2.5 text-sm">
+            <li>
+              <strong className="text-[var(--red)]">ULB exhausted, pool still has free credits</strong>{" "}
+              — user is blocked anyway. ULB tracks <em>total</em> usage and runs in every phase.
+            </li>
+            <li>
+              <strong className="text-[var(--yellow)]">No budgets + pool empty</strong>{" "}
+              — bill grows with no cap. Riskiest config. Always set at least an enterprise spending limit.
+            </li>
+            <li>
+              <strong className="text-[var(--purple)]">Ent exhausted with “Exclude CC usage” ON</strong>{" "}
+              — CC users keep running (governed by CC budget); non-CC users are blocked.
+            </li>
+            <li>
+              <strong className="text-[var(--green)]">CC user · all budgets pass</strong>{" "}
+              — Org and Ent are <em>not consulted</em> for CC members; CC is their cap.
+            </li>
+          </ul>
+          <p className="tiny mt-3 text-[var(--text-muted)]">
+            Pipeline order: Request → <strong>ULB</strong> → Pool → (in CC? → CC) <em>or</em> Org → Ent → Outcome. Each gate is checked independently; most-restrictive wins.
+          </p>
+        </div>
       </div>
     </div>
   );
